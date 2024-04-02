@@ -70,7 +70,7 @@ def new_game(player):
     if player != 'X' and player != 'O':
       return json.dumps('Error -- Player must be X or O')
     
-    game_id = 'testid' # shortuuid.uuid()
+    game_id = shortuuid.uuid()
     if player == 'X':
         gameDictionary[game_id] = 'X'
     else:
