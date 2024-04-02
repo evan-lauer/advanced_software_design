@@ -1,4 +1,6 @@
-#   USAGE NOTE:
+# Group: Ethan, Evan, Rajira, Avery
+#  
+# USAGE NOTE:
 #
 #   Board state is encoded bottom-to-top, meaning the first
 #   7 characters after the pound sign represent the bottom row and 
