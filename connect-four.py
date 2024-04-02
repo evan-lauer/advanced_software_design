@@ -1,3 +1,20 @@
+#   USAGE NOTE:
+#
+#   Board state is encoded bottom-to-top, meaning the first
+#   7 characters after the pound sign represent the bottom row and 
+#   the last 7 represent the top row.
+#
+#   Example: 
+#   The board state X#XXOXOOX-OOOXXO--OXOX---O--X---------------
+#   corresponds to the following board:
+#
+#       -------
+#       -------
+#       --O--X-
+#       --OXOX-
+#       -OOOXXO
+#       XXOXOOX
+
 import sys
 from flask import Flask
 import json
@@ -6,6 +23,13 @@ import shortuuid
 app = Flask(__name__)
 
 gameDictionary = {'testid': 'X'}
+
+def print_board(boardState):
+    i = 35
+    for j in range(6):
+        print(boardState[i:i+7])
+        i-=7
+    print("\n")
 
 # check to see if the given player has won the game
 def check_win(boardState, piece):
@@ -44,7 +68,10 @@ def check_win(boardState, piece):
 # Given a column, drop a piece into that column and return the new board state
 # Expects a 0-indexed column
 def make_move(boardState, column, piece):
-    topRow = boardState[35:]
+    print("INPUT:\n")
+    print_board(boardState)
+
+    topRow = boardState[35:] #should this be 36?
 
     # Check to make sure there's room in the column
     if topRow[column] != '-':
@@ -58,7 +85,10 @@ def make_move(boardState, column, piece):
         gravityPointer -= 7
       
     # Now gravityPointer points to the bottom-most available square, so we add the new piece
-    boardState = boardState[:gravityPointer] + piece[0] + boardState[gravityPointer + 1 :]    
+    boardState = boardState[:gravityPointer] + piece[0] + boardState[gravityPointer + 1 :]
+    
+    print("OUTPUT:\n")
+    print_board(boardState) 
     return boardState
 
 @app.route('/')
