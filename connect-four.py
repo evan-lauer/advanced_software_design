@@ -21,14 +21,29 @@ def check_win(boardState, piece):
             linearIndex = startRow * 7 + col
             if boardState[linearIndex] == piece and boardState[linearIndex+7] == piece and boardState[linearIndex+14] == piece and boardState[linearIndex+21] == piece:
                 return True
+
+    # check for diagonals (positive slope)   
+    for row in range(3):
+        for col in range(4):
+            linearIndex = row * 7 + col
+            if boardState[linearIndex] == piece and boardState[linearIndex+8] == piece and boardState[linearIndex+16] == piece and boardState[linearIndex+24] == piece:
+                return True
+    
+    # check for diagonals (negative slope)
+    for row in range(3):
+        for col in range(3, 7):
+            linearIndex = row * 7 + col
+            if boardState[linearIndex] == piece and boardState[linearIndex+6] == piece and boardState[linearIndex+12] == piece and boardState[linearIndex+18] == piece:
+                return True
+    
+    # no win was found
     return False
 
 
 
 # Given a column, drop a piece into that column and return the new board state
 # Expects a 0-indexed column
-def make_move(state, column, piece):
-    boardState = state[2:]
+def make_move(boardState, column, piece):
     topRow = boardState[35:]
 
     # Check to make sure there's room in the column
@@ -43,10 +58,7 @@ def make_move(state, column, piece):
         gravityPointer -= 7
       
     # Now gravityPointer points to the bottom-most available square, so we add the new piece
-    boardState = boardState[:gravityPointer] + piece[0] + boardState[gravityPointer + 1 :]
-
-    print(boardState,    file=sys.stderr)
-    
+    boardState = boardState[:gravityPointer] + piece[0] + boardState[gravityPointer + 1 :]    
     return boardState
 
 @app.route('/')
@@ -71,12 +83,25 @@ def show_games():
 
 @app.route('/nextmove/<gameID>/<oppCol>/<state>')
 def next_move(gameID, oppCol, state):
-    
+
     computerPlayer = gameDictionary[gameID]
 
     if computerPlayer != state[0]:
         return json.dumps("Error -- It's the player's turn")
-    return make_move(state, 0, computerPlayer)
+    
+    # We have to keep track of the last valid move we can make
+    lastAvailableColumn = -1
+    boardState = state[2:]
+    for column in range(7):
+        if boardState[35 + column] == '-':
+            lastAvailableColumn = column
+            nextState = make_move(boardState, column, computerPlayer)
+            if check_win(nextState, computerPlayer):
+                return computerPlayer + '#' + nextState
+    if lastAvailableColumn == -1:
+        return "Error -- no available moves"
+    return computerPlayer + '#' + make_move(boardState, lastAvailableColumn, computerPlayer)
+        
 
 
     
