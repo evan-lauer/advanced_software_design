@@ -1,4 +1,4 @@
-# Group: Ethan, Evan, Rajira, Avery
+# Group: Ethan, Evan, Rajeera, Avery
 #  
 # USAGE NOTE:
 #
