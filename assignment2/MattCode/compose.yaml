@@ -1,8 +1,15 @@
-# Add a service for each of the two AI 
+# Add a service for each of the two AI
 
 services:
-    main:
-        build: ./main
-        ports:
-          - "80:5000"
-
+  main:
+    build: ./main
+    ports:
+      - "80:5000"
+  ai1:
+    build: ./ai1
+    expose:
+      - "5000"
+  ai2:
+    build: ./ai2
+    expose:
+      - "5000"
