@@ -11,8 +11,8 @@ import urllib
 
 app = Flask(__name__)
 
-ai_one_url = "http://aione:5555"
-ai_two_url = "http://aione:5555"
+ai_one_url = "http://aione:5000"
+ai_two_url = "http://aitwo:5000"
 
 max_gamenum = 1
 state_dict = {}

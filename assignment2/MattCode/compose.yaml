@@ -6,10 +6,10 @@ services:
     ports:
       - "80:5000"
   ai1:
-    build: ./ai1
+    build: ./aione
     expose:
       - "5000"
   ai2:
-    build: ./ai2
+    build: ./aitwo
     expose:
       - "5000"

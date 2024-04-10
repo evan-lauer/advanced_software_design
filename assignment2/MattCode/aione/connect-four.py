@@ -21,10 +21,11 @@ import sys
 from flask import Flask
 import json
 import argparse
-import shortuuid
+import random
+
 app = Flask(__name__)
 
-gameDictionary = {'testid': 'X'}
+gameDictionary = {}
 
 def print_board(boardState):
     i = 35
@@ -102,12 +103,13 @@ def new_game(player):
     if player != 'X' and player != 'O':
       return json.dumps('Error -- Player must be X or O')
     
-    game_id = shortuuid.uuid()
-    if player == 'X':
-        gameDictionary[game_id] = 'X'
-    else:
-        gameDictionary[game_id] = 'O'
-    return json.dumps({'ID': game_id})
+    waiting = True
+    while waiting:
+        game_id = random.randint(1000, 2000)
+        print(game_id) #-ethan
+        if game_id not in gameDictionary:
+            gameDictionary[game_id] = player
+        return json.dumps({'ID': game_id})
 
 @app.route('/seegames')
 def show_games():
@@ -116,7 +118,8 @@ def show_games():
 @app.route('/nextmove/<gameID>/<oppCol>/<state>')
 def next_move(gameID, oppCol, state):
 
-    computerPlayer = gameDictionary[gameID]
+    print(gameDictionary.keys()) #-ethan
+    computerPlayer = gameDictionary[int(gameID)]
 
     if computerPlayer != state[0]:
         return json.dumps("Error -- It's the player's turn")
@@ -132,7 +135,7 @@ def next_move(gameID, oppCol, state):
                 return computerPlayer + '#' + nextState
     if lastAvailableColumn == -1:
         return "Error -- no available moves"
-    return computerPlayer + '#' + make_move(boardState, lastAvailableColumn, computerPlayer)
+    return json.dumps({'ID': gameID, 'col': lastAvailableColumn, 'state': computerPlayer + '#' + make_move(boardState, lastAvailableColumn, computerPlayer)})
         
 
 

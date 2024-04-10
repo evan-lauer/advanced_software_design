@@ -11,8 +11,8 @@ import urllib
 
 # IMPORTANT: Change these Host Names and Ports as needed
 # This should be the Ports (and host names) where the AI players are listening
-ai_one_url = "http://aione:5000"
-ai_two_url = "http://aitwo:5000"
+ai_one_url = "http://ai1:5000"
+ai_two_url = "http://ai2:5000"
 
 max_gamenum = 1
 state_dict = {}
@@ -105,7 +105,7 @@ def isGameOver(state):
                 return True
             if isWinDownLeft(board,row,col):
                 return True
-    
+
     return False
 
 # This function is intended to be used inside a thread
@@ -140,11 +140,13 @@ def play_game(num):
         #The hash symbol in the state needs to be replaced by the code %23
         url_state = urllib.parse.quote(cur_state)
         query_url = ai_urls[player] + '/nextmove/' + ids[player] + '/' + col + '/' + url_state
+        print(query_url) #-ethan
 
         #Debug write to stderr to see output in the terminal window
         #sys.stderr.write(query_url)
-        
+        print(requests.get(query_url)) #-ethan
         ai_answer = requests.get(query_url).json()
+        print(ai_answer) #-ethan
         cur_state = ai_answer['state']
         col = str( ai_answer['col'] )
 

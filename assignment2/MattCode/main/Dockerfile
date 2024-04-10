@@ -9,6 +9,7 @@ WORKDIR /code
 # We install Flask and requests in the container using Pip
 RUN pip install flask
 RUN pip install requests
+# RUN pip install threadings
 
 # We want port 5000 (the default Flask port) to be used outside the container
 EXPOSE 5000
@@ -23,4 +24,4 @@ COPY . .
 #
 # CMD is almost always used to start a program that
 #    runs indefinitely and listens over the network for requests
-CMD ["python3", "connect4-server.py"]
+CMD ["python3", "-u", "connect4-server.py"]

@@ -7,7 +7,7 @@ function fetchState() {
 
 function updateState(the_json) {
     new_state = the_json['state'];
-  
+    console.log(new_state)
     the_gameboard = document.getElementById("gameboard");
     the_gameboard.innerHTML = '';
     state_table = makeTable(new_state)

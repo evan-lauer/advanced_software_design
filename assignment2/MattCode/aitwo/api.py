@@ -20,6 +20,7 @@ def newGame(player):
     waiting = True
     while waiting:
         newID = random.randint(1000, 2000)
+        print(newID) # -ethan
         if newID not in existing_games:
             existing_games[newID] = player
             return flask.jsonify({
@@ -43,15 +44,23 @@ def nextMove(gameID, oppCol, state):
             column += board[index]
         columns.append(column)
 
-    # if oppCol is 3, nums would be
-    topBox = (6*6)+oC-1
-    for i in range(topBox, 0, -7):
-        boardBox = board[i]
-        if boardBox != '-':
-            if boardBox == 'X':
-                player = 'O'  # if the last player's move was an X, set the current move as an O
-            else:
-                player = 'X'  # if the last player's move was an O, set the current move as an X
+
+    #commenting this out for something potentially easier.
+
+
+    # # if oppCol is 3, nums would be
+    # topBox = (6*6)+oC-1
+    # for i in range(topBox, 0, -7):
+    #     boardBox = board[i]
+    #     if boardBox != '-':
+    #         if boardBox == 'X':
+    #             player = 'O'  # if the last player's move was an X, set the current move as an O
+    #         else:
+    #             player = 'X'  # if the last player's move was an O, set the current move as an X
+
+    #used this instead of above for identifyig player - ethan
+    print(existing_games.keys()) #-ethan
+    player = existing_games[int(id)]
 
     success = False
     numTries = 0
@@ -70,7 +79,8 @@ def nextMove(gameID, oppCol, state):
             numTries += 1
             continue
 
-    return flask.jsonify({'ID': id, 'Col': column, 'State': board})
+    #return flask.jsonify({'ID': id, 'Col': column, 'State': board})
+    return flask.jsonify({'ID': id, 'col': randCol,'state':board})
 
 
 if __name__ == '__main__':

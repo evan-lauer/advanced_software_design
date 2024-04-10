@@ -22,7 +22,7 @@ COPY . .
 #
 # CMD is almost always used to start a program that
 #    runs indefinitely and listens over the network for requests
-CMD ["python3", "connect-four.py"]
+CMD ["python3", "-u", "connect-four.py"]
 
 # Instead of running the Flask app through Python
 # .. We could also set some environment variables
