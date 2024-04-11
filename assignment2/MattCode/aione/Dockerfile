@@ -8,6 +8,7 @@ WORKDIR /code
 
 # We install Flask in the container using Pip
 RUN pip install flask
+RUN pip install shortuuid
 
 # We want port 5000 (the default Flask port) to be used outside the container
 EXPOSE 5000

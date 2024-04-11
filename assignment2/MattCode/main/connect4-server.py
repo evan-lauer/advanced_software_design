@@ -1,3 +1,5 @@
+#NOTE: Occasionally program will stop after just one move due to an unresolved error.
+
 from flask import Flask
 from flask import render_template
 from _thread import *

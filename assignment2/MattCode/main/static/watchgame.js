@@ -29,9 +29,9 @@ function makeTable(state){
     tbl.style.marginLeft = 'auto';
     tbl.style.marginRight = 'auto';
 
-    for (let i = 0; i < 6; i++){
+    for (let i = 5; i >= 0; i--){
 	const tr = tbl.insertRow();
-	for (let j = 0; j < 7; j++){
+	for (let j = 6; j >= 0; j--){
 	    const td = tr.insertCell();
 	    // Compute the character position in the state string
 	    chr = state.charAt(2 + j + i*7);

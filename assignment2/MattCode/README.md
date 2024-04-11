@@ -1,3 +1,5 @@
+NOTE: Occasionally program will stop after just one move due to an unresolved error.
+
 Author: Matt Lepinski
 Author Email: mlepinski@carleton.edu
 
